@@ -24,8 +24,8 @@
     --line:#E9E1DA;
   }
   *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{margin:0;font-family:'Nunito',sans-serif;background:var(--white);color:var(--black);}
+  html{scroll-behavior:smooth;overflow-x:hidden;max-width:100%;}
+  body{margin:0;font-family:'Nunito',sans-serif;background:var(--white);color:var(--black);overflow-x:hidden;max-width:100%;}
   a{color:var(--orange);text-decoration:none;}
   a:hover{color:var(--orange-dark);}
   button{font-family:inherit;}
@@ -42,9 +42,9 @@
     border:1px solid var(--yellow);color:var(--yellow);font-weight:800;font-size:14px;
     letter-spacing:1px;padding:10px 22px;border-radius:999px;animation:pulseBadge 2.6s ease-in-out infinite;}
   @keyframes pulseBadge{0%,100%{box-shadow:0 0 0 rgba(255,194,0,0);}50%{box-shadow:0 0 22px rgba(255,194,0,0.45);}}
-  .hero h1{color:var(--white);font-size:54px;font-weight:900;line-height:1.14;max-width:900px;margin:28px 0 20px;}
+  .hero h1{color:var(--white);font-size:54px;font-weight:900;line-height:1.14;width:100%;max-width:900px;margin:28px 0 20px;}
   .hero h1 span{background:linear-gradient(135deg,var(--orange),var(--yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-  .hero p.sub{color:var(--light-blue);font-size:18px;max-width:620px;line-height:1.6;margin:0 0 40px;}
+  .hero p.sub{color:var(--light-blue);font-size:18px;width:100%;max-width:620px;line-height:1.6;margin:0 0 40px;}
   .orbit-wrap{position:relative;width:320px;height:320px;margin:6px auto 40px;}
   .ring{position:absolute;border-radius:50%;border:1.5px dashed rgba(170,189,198,0.4);top:50%;left:50%;transform:translate(-50%,-50%);}
   .ring.r1{width:320px;height:320px;animation:spin 22s linear infinite;}
@@ -94,13 +94,14 @@
   .tab:hover .tab-tooltip{opacity:1;transform:translateX(-50%) translateY(0);}
   .missions-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;}
   .mission-card{position:relative;height:150px;border-radius:18px;overflow:hidden;background:var(--white);
-    border:1px solid var(--line);padding:20px;display:flex;flex-direction:column;justify-content:flex-end;}
+    border:1px solid var(--line);padding:20px;display:flex;flex-direction:column;justify-content:flex-end;cursor:pointer;}
   .mission-card .m-icon{font-size:26px;}
   .mission-card h4{font-size:15.5px;font-weight:900;margin:10px 0 0;color:var(--black);}
   .mission-reveal{position:absolute;inset:0;background:linear-gradient(160deg,var(--purple),var(--blue));
     color:var(--white);padding:18px;display:flex;align-items:center;font-size:12.5px;line-height:1.5;
     font-weight:600;opacity:0;transform:translateY(12px);transition:all .3s ease;}
-  .mission-card:hover .mission-reveal{opacity:1;transform:translateY(0);}
+  .mission-card:hover .mission-reveal,
+  .mission-card.is-open .mission-reveal{opacity:1;transform:translateY(0);}
 
   /* IMPACTO */
   .stats-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;}
@@ -109,7 +110,7 @@
   .stat-label{color:var(--light-blue);font-weight:700;font-size:12.5px;letter-spacing:.4px;margin-top:8px;text-transform:uppercase;}
 
   /* TESTIMONIOS */
-  .testimonial-card{max-width:720px;margin:0 auto;background:var(--white);border:1px solid var(--line);border-radius:26px;padding:48px;text-align:center;}
+  .testimonial-card{max-width:720px;margin:0 auto;background:var(--white);border:1px solid var(--line);border-radius:26px;padding:48px;text-align:center;touch-action:pan-y;user-select:none;}
   .quote-mark{font-size:60px;color:var(--orange);font-weight:900;line-height:1;}
   .testimonial-text{font-size:19px;font-weight:700;color:var(--black);line-height:1.55;margin:8px 0 22px;min-height:96px;}
   .testimonial-author{font-size:14px;color:var(--purple);font-weight:800;}
@@ -130,6 +131,15 @@
 
   @media (max-width: 900px){
     .hero h1{font-size:34px;}
+    .badge{font-size:12px;padding:9px 14px;text-align:center;white-space:normal;max-width:calc(100% - 16px);}
+    .orbit-wrap{width:260px;height:260px;}
+    .ring.r1{width:260px;height:260px;}
+    .ring.r2{width:190px;height:190px;}
+    .rocket-logo{width:140px;}
+    .chip{font-size:10.5px;padding:5px 9px;}
+    .chip.c1{left:2%;}
+    .chip.c2{right:2%;}
+    .chip.c3{left:2%;}
     .pillars{grid-template-columns:1fr;}
     .missions-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
     .stats-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
@@ -171,7 +181,7 @@
     <div class="section-inner">
       <span class="eyebrow">Gamificación</span>
       <h2 class="section-title">Las misiones de la experiencia</h2>
-      <p class="section-sub">Cada canal tiene su propia malla de retos, con nombres que inspiran a seguir subiendo de nivel. Pasa el mouse por cada misión.</p>
+      <p class="section-sub">Cada canal tiene su propia malla de retos, con nombres que inspiran a seguir subiendo de nivel. Toca o pasa el mouse por cada misión.</p>
       <div class="tabs" id="tabs-container"></div>
       <div class="missions-grid" id="missions-grid"></div>
     </div>
@@ -191,7 +201,7 @@
       <span class="eyebrow">Experiencia real</span>
       <h2 class="section-title">La voz de los Winners</h2>
       <p class="section-sub">De la incertidumbre del primer día a sentirse seguros y empoderados en su puesto.</p>
-      <div class="testimonial-card">
+      <div class="testimonial-card" id="testimonial-card">
         <div class="quote-mark">"</div>
         <p class="testimonial-text" id="testimonial-text"></p>
         <p class="testimonial-author" id="testimonial-author"></p>
@@ -329,6 +339,10 @@
       card.appendChild(el("div", "m-icon", m.icon));
       card.appendChild(el("h4", null, m.title));
       card.appendChild(el("div", "mission-reveal", m.desc));
+      // Toca (móvil) o pasa el mouse (desktop) para revelar la descripción.
+      card.addEventListener("click", function () {
+        card.classList.toggle("is-open");
+      });
       grid.appendChild(card);
     });
   }
@@ -398,6 +412,34 @@
     state.testimonialIndex = (state.testimonialIndex + 1) % TESTIMONIALS.length;
     renderTestimonial();
   });
+
+  // Swipe táctil para el carrusel de testimonios (izquierda = siguiente, derecha = anterior)
+  (function setupSwipe() {
+    var card = document.getElementById("testimonial-card");
+    var startX = 0, startY = 0, tracking = false;
+    card.addEventListener("touchstart", function (e) {
+      var t = e.changedTouches[0];
+      startX = t.clientX;
+      startY = t.clientY;
+      tracking = true;
+    }, { passive: true });
+    card.addEventListener("touchend", function (e) {
+      if (!tracking) return;
+      tracking = false;
+      var t = e.changedTouches[0];
+      var dx = t.clientX - startX;
+      var dy = t.clientY - startY;
+      var THRESHOLD = 40;
+      if (Math.abs(dx) > THRESHOLD && Math.abs(dx) > Math.abs(dy)) {
+        if (dx < 0) {
+          state.testimonialIndex = (state.testimonialIndex + 1) % TESTIMONIALS.length;
+        } else {
+          state.testimonialIndex = (state.testimonialIndex + TESTIMONIALS.length - 1) % TESTIMONIALS.length;
+        }
+        renderTestimonial();
+      }
+    }, { passive: true });
+  })();
 
   renderPillars();
   renderTabs();
